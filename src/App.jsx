@@ -247,7 +247,8 @@ function IconBox({ name, active = false }) {
       <Icon name={name} size={20} />
     </span>
   );
-}\n
+}
+
 function AnimeLogo() {
   return (
     <div className="relative h-36 w-36 rounded-full overflow-hidden bg-black border-2 border-orange-400 shadow-[0_0_34px_rgba(249,115,22,0.35)]">
