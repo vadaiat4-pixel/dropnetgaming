@@ -5,9 +5,9 @@ const STORAGE_SESSION = "dropnetgaming_session_v3";
 const STORAGE_TICKETS = "dropnetgaming_tickets_v1";
 
 const DEFAULT_ADMIN = {
-  username: "admin",
-  password: "admin123",
-  nickname: "Dropnet Admin",
+  username: "skwizzy22",
+  password: "123456",
+  nickname: "skwizzy22",
   email: "admin@dropnetgaming.local",
   role: "admin"
 };
@@ -178,8 +178,8 @@ function writeJson(key, value) {
 
 function loadUsers() {
   const users = readJson(STORAGE_USERS, []);
-  const hasAdmin = users.some((user) => user.username === DEFAULT_ADMIN.username);
-  return hasAdmin ? users : [DEFAULT_ADMIN, ...users];
+  const cleanedUsers = users.filter((user) => user.username !== "admin" && user.username !== DEFAULT_ADMIN.username);
+  return [DEFAULT_ADMIN, ...cleanedUsers];
 }
 
 function loadSession() {
@@ -278,7 +278,7 @@ function TextInput({ label, value, onChange, type = "text", placeholder }) {
 }
 
 function TopNav({ page, setPage, language, currentUser, onLogout }) {
-  const topLinks = ["matchmaking", "play", "tournaments", "league", "news", "admin"];
+  const topLinks = ["matchmaking", "play", "tournaments", "league", "news"];
   return (
     <div className={`min-h-[60px] bg-black/65 backdrop-blur-md border-b ${theme.border} flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-3 lg:py-0 ${theme.glow}`}>
       <ClickButton onClick={() => goTo(setPage, "matchmaking")} className="flex items-center gap-3"><div className="text-white font-black text-2xl">DNG</div><div className="bg-gradient-to-br from-orange-500 via-red-500 to-fuchsia-600 text-white rounded-2xl h-11 w-11 flex items-center justify-center text-xs font-black border border-orange-300/50 shadow-[0_0_24px_rgba(249,115,22,0.34)]">CS2</div><span className="text-white font-semibold">EU</span></ClickButton>
@@ -322,7 +322,7 @@ function NewsPage({ setPage }) {
 }
 
 function SiteFooter({ currentUser, setPage }) {
-  return <footer className="mt-10 border-t border-orange-500/20 bg-[#151515]/90 text-white"><div className="grid gap-6 md:grid-cols-3 px-5 lg:px-16 py-8 text-sm"><div><h3 className="font-black mb-3">Обратная связь</h3><div className="flex gap-3"><button onClick={() => goTo(setPage, "feedback")} className="h-10 w-10 rounded-xl bg-indigo-500 hover:bg-indigo-400">☏</button><button onClick={() => goTo(setPage, "feedback")} className="h-10 w-10 rounded-xl bg-violet-500 hover:bg-violet-400">✉</button></div><h3 className="font-black mt-5 mb-3">Подпишитесь</h3><button className="h-10 w-10 rounded-full bg-sky-500 hover:bg-sky-400">✈</button></div><div className="text-center space-y-3"><button onClick={() => goTo(setPage, "feedback")} className="rounded-xl border border-white/60 px-5 py-3 font-black hover:bg-white/10">🌐 Служба поддержки сайта</button><p>Вы зашли под именем <b>{currentUser ? currentUser.nickname || currentUser.username : "Гость"}</b></p><p className="hover:text-orange-300 cursor-pointer">Сводка хранения данных</p><p className="hover:text-orange-300 cursor-pointer">Скачать мобильное приложение</p><p className="hover:text-orange-300 cursor-pointer">Начать тур для пользователя на этой странице</p></div><div className="md:text-right"><h3 className="font-black mb-3">Скачать мобильное приложение</h3><div className="flex flex-col md:items-end gap-3"><button className="w-44 rounded-lg border border-white/60 bg-black px-4 py-2 text-left hover:bg-white/10"><span className="text-xs">GET IT ON</span><br /><b>Google Play</b></button><button className="w-44 rounded-lg border border-white/60 bg-black px-4 py-2 text-left hover:bg-white/10"><span className="text-xs">Download on the</span><br /><b>App Store</b></button></div></div></div><div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 py-4 text-center font-semibold">Тема оформления сайта разработана <div className="text-2xl font-black tracking-wide">dropnetgaming</div><button onClick={() => goTo(setPage, "feedback")} className="absolute right-6 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/75 text-black font-black">?</button></div></footer>;
+  return <footer className="mt-10 border-t border-orange-500/20 bg-[#151515]/90 text-white"><div className="grid gap-6 md:grid-cols-3 px-5 lg:px-16 py-8 text-sm"><div><h3 className="font-black mb-3">Dropnetgaming</h3><p className="text-zinc-400 leading-relaxed">Игровая платформа для CS2: матчи, профиль, новости, админка и обратная связь.</p></div><div className="text-center space-y-3"><button onClick={() => goTo(setPage, "feedback")} className="rounded-xl border border-white/60 px-5 py-3 font-black hover:bg-white/10">🌐 Служба поддержки сайта</button><p>Вы зашли под именем <b>{currentUser ? currentUser.nickname || currentUser.username : "Гость"}</b></p><p className="hover:text-orange-300 cursor-pointer">Сводка хранения данных</p><p className="hover:text-orange-300 cursor-pointer">Скачать мобильное приложение</p><p className="hover:text-orange-300 cursor-pointer">Начать тур для пользователя на этой странице</p></div><div className="md:text-right"><h3 className="font-black mb-3">Скачать мобильное приложение</h3><div className="flex flex-col md:items-end gap-3"><button className="w-44 rounded-lg border border-white/60 bg-black px-4 py-2 text-left hover:bg-white/10"><span className="text-xs">GET IT ON</span><br /><b>Google Play</b></button><button className="w-44 rounded-lg border border-white/60 bg-black px-4 py-2 text-left hover:bg-white/10"><span className="text-xs">Download on the</span><br /><b>App Store</b></button></div></div></div><div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 py-4 text-center font-semibold">Тема оформления сайта разработана <div className="text-2xl font-black tracking-wide">dropnetgaming</div><button onClick={() => goTo(setPage, "feedback")} className="absolute right-6 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/75 text-black font-black">?</button></div></footer>;
 }
 
 function FeedbackPage({ currentUser, tickets, setTickets }) {
