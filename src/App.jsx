@@ -288,23 +288,16 @@ function DropnetgamingLogo({ compact = false }) {
 
   if (compact) {
     return (
-      <div className="flex items-center gap-3">
-        <img
-          src={logoSrc}
-          alt="DNG logo"
-          className="h-12 w-12 rounded-2xl object-cover border border-white/10 shadow-[0_0_18px_rgba(255,255,255,0.12)] bg-black"
-        />
-        <div className="leading-none">
-          <div className="text-white font-black text-2xl tracking-tight">DNG</div>
-          <div className="text-[10px] font-black tracking-[0.3em] text-cyan-200/70">CS2</div>
-        </div>
+      <div className="leading-none px-2">
+        <div className="text-white font-black text-3xl tracking-tight">DNG</div>
+        <div className="text-[10px] font-black tracking-[0.35em] text-zinc-300/80 text-center">CS2</div>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full max-w-[190px] rounded-[28px] overflow-hidden bg-black border border-white/10 shadow-[0_0_22px_rgba(255,255,255,0.10)]">
-      <img src={logoSrc} alt="DNG logo" className="block w-full h-auto object-cover" />
+    <div className="relative w-full max-w-[190px] overflow-hidden bg-transparent border-0 shadow-none">
+      <img src={logoSrc} alt="DNG logo" className="block w-full h-auto object-contain bg-transparent" />
     </div>
   );
 }
