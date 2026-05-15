@@ -9,7 +9,7 @@ const STORAGE_QUESTS = "dropnetgaming_quests_v8";
 
 const DEFAULT_ADMIN = {
   username: "skwizzy22",
-  password: "123456",
+  password: "231208",
   nickname: "skwizzy22",
   email: "admin@dropnetgaming.local",
   role: "admin",
