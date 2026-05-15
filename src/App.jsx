@@ -296,8 +296,12 @@ function DropnetgamingLogo({ compact = false }) {
   }
 
   return (
-    <div className="relative w-full max-w-[190px] overflow-hidden bg-transparent border-0 shadow-none">
-      <img src={logoSrc} alt="DNG logo" className="block w-full h-auto object-contain bg-transparent" />
+    <div className="relative w-full max-w-[190px] rounded-[28px] overflow-hidden bg-transparent border-0 shadow-none">
+      <img
+        src={logoSrc}
+        alt="DNG logo"
+        className="block w-full h-auto object-contain rounded-[28px] bg-transparent"
+      />
     </div>
   );
 }
@@ -345,7 +349,14 @@ function LeftSidebar({ page, setPage, language }) {
   ];
   const clubItems = [{ key: "tournaments", icon: "users", label: t(language, "tournaments") }, { key: "inventory", icon: "trophy", label: "SKINBRO | CS2" }, { key: "profile", icon: "plus", label: t(language, "createClub") }];
   const itemClass = (key) => `h-12 rounded-2xl flex items-center gap-3 px-4 text-left border backdrop-blur-md shrink-0 lg:w-full ${page === key ? "bg-gradient-to-r from-cyan-500/22 via-red-500/12 to-transparent text-white border-cyan-400/50 shadow-[0_0_24px_rgba(34,211,238,0.16)]" : "bg-white/[0.025] text-zinc-300 border-white/5 hover:bg-white/[0.07] hover:text-white hover:border-cyan-300/30 lg:hover:translate-x-1"}`;
-  return <aside className={`w-full lg:w-60 bg-black/60 backdrop-blur-md border-b lg:border-b-0 lg:border-r ${theme.border} flex lg:flex-col py-3 lg:py-6 px-3 lg:px-4 gap-2 overflow-x-auto lg:overflow-visible ${theme.glow}`}><div className="hidden lg:flex justify-center mb-6"><ClickButton onClick={() => goTo(setPage, "matchmaking")}><DropnetgamingLogo /></ClickButton></div>{[...mainItems, ...clubItems].map((item, index) => <React.Fragment key={item.key}>{index === mainItems.length && <div className="hidden lg:block h-px bg-cyan-950/50 my-4" />}<ClickButton title={item.label} onClick={() => goTo(setPage, item.key)} className={`${itemClass(item.key)} group`}><IconBox name={item.icon} active={page === item.key} /><span className="text-sm lg:text-base font-semibold tracking-wide whitespace-nowrap">{item.label}</span></ClickButton></React.Fragment>)}</aside>;
+  return <aside className={`w-full lg:w-60 bg-black/60 backdrop-blur-md border-b lg:border-b-0 lg:border-r ${theme.border} flex lg:flex-col py-3 lg:py-6 px-3 lg:px-4 gap-2 overflow-x-auto lg:overflow-visible ${theme.glow}`}><div className="hidden lg:flex justify-center mb-6">
+        <ClickButton
+          onClick={() => goTo(setPage, "matchmaking")}
+          className="bg-transparent border-0 shadow-none p-0 rounded-[28px] overflow-hidden"
+        >
+          <DropnetgamingLogo />
+        </ClickButton>
+      </div>{[...mainItems, ...clubItems].map((item, index) => <React.Fragment key={item.key}>{index === mainItems.length && <div className="hidden lg:block h-px bg-cyan-950/50 my-4" />}<ClickButton title={item.label} onClick={() => goTo(setPage, item.key)} className={`${itemClass(item.key)} group`}><IconBox name={item.icon} active={page === item.key} /><span className="text-sm lg:text-base font-semibold tracking-wide whitespace-nowrap">{item.label}</span></ClickButton></React.Fragment>)}</aside>;
 }
 
 function RightBar({ setPage, language }) {
