@@ -48,6 +48,10 @@ const ru = {
   settings: "Настройки",
   feedback: "Обратная связь",
   leaderboard: "Лидерборд",
+  project: "О проекте",
+  pricing: "Тарифы",
+  contacts: "Контакты",
+  privacy: "Политика",
   login: "Войти",
   register: "Регистрация",
   logout: "Выйти",
@@ -97,6 +101,10 @@ const en = {
   settings: "Settings",
   feedback: "Feedback",
   leaderboard: "Leaderboard",
+  project: "Project",
+  pricing: "Pricing",
+  contacts: "Contacts",
+  privacy: "Privacy",
   login: "Login",
   register: "Register",
   logout: "Logout",
@@ -131,6 +139,10 @@ const routeIcons = {
   tournaments: "trophy",
   league: "chart",
   leaderboard: "chart",
+  project: "news",
+  pricing: "trophy",
+  contacts: "message",
+  privacy: "shield",
   news: "news",
   search: "search",
   profile: "shield",
@@ -324,7 +336,7 @@ function TextInput({ label, value, onChange, type = "text", placeholder }) {
 }
 
 function TopNav({ page, setPage, language, currentUser, onLogout, notifications }) {
-  const topLinks = ["matchmaking", "play", "tournaments", "leaderboard", "news"];
+  const topLinks = ["matchmaking", "play", "tournaments", "leaderboard", "project", "news"];
   return (
     <div className={`min-h-[60px] bg-black/65 backdrop-blur-md border-b ${theme.border} flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between px-4 lg:px-6 py-3 lg:py-0 ${theme.glow}`}>
       <ClickButton onClick={() => goTo(setPage, "matchmaking")} className="flex items-center gap-3"><DropnetgamingLogo compact /></ClickButton>
@@ -343,6 +355,7 @@ function LeftSidebar({ page, setPage, language }) {
     { key: "friends", icon: "users", label: t(language, "partyFinder") },
     { key: "play", icon: "play", label: t(language, "play") },
     { key: "news", icon: "news", label: t(language, "news") },
+    { key: "project", icon: "news", label: t(language, "project") },
     { key: "leaderboard", icon: "chart", label: t(language, "leaderboard") },
     { key: "missions", icon: "missions", label: t(language, "missions") },
     { key: "feedback", icon: "message", label: t(language, "feedback") },
@@ -389,7 +402,131 @@ function Matchmaking({ setPage, language, currentUser, onStartMatch, quests, mat
   const partySlots = [0, 1, 2, 3];
   const matchTypes = language === "Русский" ? ["Стандартный матч", "Суперматч", "Premium Match"] : ["Standard Match", "Super Match", "Premium Match"];
   const user = currentUser || { nickname: "skwizzy22", username: "guest", elo: 1000, level: 1, wins: 0, matches: 0 };
-  return <main className="flex-1 overflow-auto bg-transparent text-white"><div className="bg-gradient-to-r from-black via-zinc-800 to-black text-white font-black text-center py-3 border-b border-white/10 shadow-[0_0_34px_rgba(255,255,255,0.12)] tracking-wide">{t(language, "siteNote")} • STEEL WINGS ARENA</div><section className="relative min-h-[520px] px-4 sm:px-6 lg:px-28 py-10 lg:py-16 bg-[radial-gradient(circle_at_50%_45%,rgba(34,211,238,0.18),transparent_42%),radial-gradient(circle_at_75%_20%,rgba(239,35,60,0.15),transparent_36%),linear-gradient(90deg,rgba(0,0,0,0.70),rgba(26,7,2,0.55),rgba(10,0,18,0.72))]"><div className="lg:absolute lg:top-5 lg:left-1/2 lg:-translate-x-1/2 bg-black/70 text-white px-4 py-1 rounded-full text-sm font-black border border-cyan-900/60 inline-block">Europe CS2 5v5 Queue</div><div className="mt-6 lg:mt-0 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-8"><div className="flex flex-col sm:flex-row sm:items-center gap-8"><ClickButton onClick={() => goTo(setPage, "profile")} className="h-28 w-28 rounded-full border-[12px] border-zinc-900 hover:border-cyan-500 flex items-center justify-center text-5xl text-cyan-300 font-black">{user.level}</ClickButton><div><ClickButton onClick={() => goTo(setPage, "leaderboard")} className="text-sm bg-black/70 hover:bg-cyan-950/40 inline-block px-3 py-1 rounded-full mb-3 border border-cyan-950/60">ELO {user.elo}</ClickButton><h1 className="text-4xl font-black">Level {user.level}</h1><div className="h-1 max-w-[520px] w-full bg-zinc-800 mt-4 rounded"><div className="h-1 bg-gradient-to-r from-cyan-400 to-red-500 rounded" style={{ width: `${Math.min(100, (user.elo % 200) / 2)}%` }} /></div><p className="text-xs text-zinc-400 mt-2">Побед: {user.wins} • Матчей: {user.matches} • XP: {user.xp}</p><ClickButton onClick={() => goTo(setPage, "profile")} className="mt-7 flex gap-3 items-center hover:text-cyan-300"><b>{user.nickname || user.username}</b><span className="bg-black/70 px-3 py-2 rounded-full text-sm font-bold border border-cyan-950/60"><Icon name="shield" size={16} className="inline mr-1" />{t(language, "verified")}</span></ClickButton></div></div><div className="grid gap-3 w-full xl:w-[640px]"><ClickButton onClick={() => goTo(setPage, "missions")} className={`${theme.panel} border ${theme.border} hover:border-cyan-400 rounded-xl p-4 flex items-center justify-between text-left`}><div><p className="text-xs tracking-[.25em] text-zinc-400 uppercase">Daily Quests</p><h3 className="font-black mt-1">{quests.quests.filter((q) => q.completed).length}/{quests.quests.length} заданий выполнено</h3><div className="h-2 w-72 max-w-full bg-zinc-800 mt-3 rounded"><div className="h-2 bg-gradient-to-r from-cyan-400 to-red-500 rounded" style={{ width: `${(quests.quests.filter((q) => q.completed).length / quests.quests.length) * 100}%` }} /></div></div><Icon name="trophy" size={24} className="text-cyan-400" /></ClickButton><ClickButton onClick={() => goTo(setPage, "leaderboard")} className={`${theme.panel} border ${theme.border} hover:border-cyan-400 rounded-xl p-4 flex items-center justify-between text-left`}><div><h3 className="font-black">ELO и уровни</h3><p className="text-cyan-400 mt-2 font-bold">Открыть лидерборд</p><p className="text-xs text-zinc-400 mt-2">Последних матчей: {matches.length}</p></div><Icon name="chart" size={42} className="text-cyan-400" /></ClickButton></div></div><div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-8 mt-10 max-w-6xl mx-auto">{partySlots.map((slot) => <ClickButton key={slot} onClick={() => (slot === 2 ? goTo(setPage, "profile") : goTo(setPage, "friends"))} className={`${theme.panel} h-44 lg:h-56 rounded-3xl border ${theme.border} hover:border-cyan-400 flex flex-col items-center justify-center hover:-translate-y-1 hover:shadow-[0_0_34px_rgba(34,211,238,0.18)]`}>{slot === 2 ? <><Icon name="crown" size={28} className="text-cyan-400 mb-3" /><Avatar seed={user.nickname || user.username} size="h-20 w-20 lg:h-24 lg:w-24" /><div className="mt-3 text-white font-bold">{user.nickname || user.username}</div></> : <><Icon name="plus" size={48} className="text-zinc-400" /><span className="text-xs text-zinc-400 mt-2">{t(language, "invite")}</span></>}</ClickButton>)}<ClickButton onClick={() => goTo(setPage, "search")} className={`${theme.panel} h-44 lg:h-56 rounded-3xl border ${theme.border} hover:border-cyan-400 flex flex-col items-center justify-center hover:-translate-y-1 hover:shadow-[0_0_34px_rgba(34,211,238,0.18)]`}><Icon name="search" size={34} className="text-zinc-400 mb-3" /><b className="text-zinc-200">{t(language, "partySearch")}</b></ClickButton></div></section><section className="px-4 sm:px-6 lg:px-28 -mt-4 lg:-mt-10 relative z-10 pb-16"><div className={`${theme.panel} border ${theme.border} rounded-t-2xl px-4 lg:px-6 py-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between`}><ClickButton onClick={() => goTo(setPage, "play")} className="text-cyan-400 flex items-center gap-2 font-bold"><Icon name="swords" /> {t(language, "matchType")}</ClickButton><ActionButton onClick={onStartMatch}>{t(language, "findMatch")}</ActionButton><ClickButton onClick={() => goTo(setPage, "servers")} className="text-zinc-300 hover:text-cyan-400 font-bold flex items-center gap-2"><Icon name="server" /> {t(language, "servers")}</ClickButton></div><div className={`grid md:grid-cols-3 gap-5 ${theme.panel} border ${theme.border} p-4 lg:p-6 rounded-b-2xl`}>{matchTypes.map((typeName) => <ClickButton key={typeName} onClick={onStartMatch} className={`${theme.card} text-left rounded-3xl border border-cyan-950/60 p-5 hover:-translate-y-1 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.16)]`}><h3 className="font-black text-white">{typeName} <span className="text-zinc-400 text-sm">• 5v5</span></h3><p className="text-zinc-400 text-sm mt-3">{t(language, "premium")}</p></ClickButton>)}</div><SiteFooter currentUser={currentUser} setPage={setPage} /></section></main>;
+  return <main className="flex-1 overflow-auto bg-transparent text-white"><div className="bg-gradient-to-r from-black via-zinc-800 to-black text-white font-black text-center py-3 border-b border-white/10 shadow-[0_0_34px_rgba(255,255,255,0.12)] tracking-wide">{t(language, "siteNote")} • STEEL WINGS ARENA</div><section className="relative min-h-[520px] px-4 sm:px-6 lg:px-28 py-10 lg:py-16 bg-[radial-gradient(circle_at_50%_45%,rgba(34,211,238,0.18),transparent_42%),radial-gradient(circle_at_75%_20%,rgba(239,35,60,0.15),transparent_36%),linear-gradient(90deg,rgba(0,0,0,0.70),rgba(26,7,2,0.55),rgba(10,0,18,0.72))]"><div className="lg:absolute lg:top-5 lg:left-1/2 lg:-translate-x-1/2 bg-black/70 text-white px-4 py-1 rounded-full text-sm font-black border border-cyan-900/60 inline-block">Europe CS2 5v5 Queue</div><div className="mt-6 lg:mt-0 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-8"><div className="flex flex-col sm:flex-row sm:items-center gap-8"><ClickButton onClick={() => goTo(setPage, "profile")} className="h-28 w-28 rounded-full border-[12px] border-zinc-900 hover:border-cyan-500 flex items-center justify-center text-5xl text-cyan-300 font-black">{user.level}</ClickButton><div><ClickButton onClick={() => goTo(setPage, "leaderboard")} className="text-sm bg-black/70 hover:bg-cyan-950/40 inline-block px-3 py-1 rounded-full mb-3 border border-cyan-950/60">ELO {user.elo}</ClickButton><h1 className="text-4xl font-black">Level {user.level}</h1><div className="h-1 max-w-[520px] w-full bg-zinc-800 mt-4 rounded"><div className="h-1 bg-gradient-to-r from-cyan-400 to-red-500 rounded" style={{ width: `${Math.min(100, (user.elo % 200) / 2)}%` }} /></div><p className="text-xs text-zinc-400 mt-2">Побед: {user.wins} • Матчей: {user.matches} • XP: {user.xp}</p><ClickButton onClick={() => goTo(setPage, "profile")} className="mt-7 flex gap-3 items-center hover:text-cyan-300"><b>{user.nickname || user.username}</b><span className="bg-black/70 px-3 py-2 rounded-full text-sm font-bold border border-cyan-950/60"><Icon name="shield" size={16} className="inline mr-1" />{t(language, "verified")}</span></ClickButton></div></div><div className="grid gap-3 w-full xl:w-[640px]"><ClickButton onClick={() => goTo(setPage, "missions")} className={`${theme.panel} border ${theme.border} hover:border-cyan-400 rounded-xl p-4 flex items-center justify-between text-left`}><div><p className="text-xs tracking-[.25em] text-zinc-400 uppercase">Daily Quests</p><h3 className="font-black mt-1">{quests.quests.filter((q) => q.completed).length}/{quests.quests.length} заданий выполнено</h3><div className="h-2 w-72 max-w-full bg-zinc-800 mt-3 rounded"><div className="h-2 bg-gradient-to-r from-cyan-400 to-red-500 rounded" style={{ width: `${(quests.quests.filter((q) => q.completed).length / quests.quests.length) * 100}%` }} /></div></div><Icon name="trophy" size={24} className="text-cyan-400" /></ClickButton><ClickButton onClick={() => goTo(setPage, "leaderboard")} className={`${theme.panel} border ${theme.border} hover:border-cyan-400 rounded-xl p-4 flex items-center justify-between text-left`}><div><h3 className="font-black">ELO и уровни</h3><p className="text-cyan-400 mt-2 font-bold">Открыть лидерборд</p><p className="text-xs text-zinc-400 mt-2">Последних матчей: {matches.length}</p></div><Icon name="chart" size={42} className="text-cyan-400" /></ClickButton></div></div><div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-8 mt-10 max-w-6xl mx-auto">{partySlots.map((slot) => <ClickButton key={slot} onClick={() => (slot === 2 ? goTo(setPage, "profile") : goTo(setPage, "friends"))} className={`${theme.panel} h-44 lg:h-56 rounded-3xl border ${theme.border} hover:border-cyan-400 flex flex-col items-center justify-center hover:-translate-y-1 hover:shadow-[0_0_34px_rgba(34,211,238,0.18)]`}>{slot === 2 ? <><Icon name="crown" size={28} className="text-cyan-400 mb-3" /><Avatar seed={user.nickname || user.username} size="h-20 w-20 lg:h-24 lg:w-24" /><div className="mt-3 text-white font-bold">{user.nickname || user.username}</div></> : <><Icon name="plus" size={48} className="text-zinc-400" /><span className="text-xs text-zinc-400 mt-2">{t(language, "invite")}</span></>}</ClickButton>)}<ClickButton onClick={() => goTo(setPage, "search")} className={`${theme.panel} h-44 lg:h-56 rounded-3xl border ${theme.border} hover:border-cyan-400 flex flex-col items-center justify-center hover:-translate-y-1 hover:shadow-[0_0_34px_rgba(34,211,238,0.18)]`}><Icon name="search" size={34} className="text-zinc-400 mb-3" /><b className="text-zinc-200">{t(language, "partySearch")}</b></ClickButton></div></section><section className="px-4 sm:px-6 lg:px-28 -mt-4 lg:-mt-10 relative z-10 pb-16"><div className={`${theme.panel} border ${theme.border} rounded-t-2xl px-4 lg:px-6 py-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between`}><ClickButton onClick={() => goTo(setPage, "play")} className="text-cyan-400 flex items-center gap-2 font-bold"><Icon name="swords" /> {t(language, "matchType")}</ClickButton><ActionButton onClick={onStartMatch}>{t(language, "findMatch")}</ActionButton><ClickButton onClick={() => goTo(setPage, "servers")} className="text-zinc-300 hover:text-cyan-400 font-bold flex items-center gap-2"><Icon name="server" /> {t(language, "servers")}</ClickButton></div><div className={`grid md:grid-cols-3 gap-5 ${theme.panel} border ${theme.border} p-4 lg:p-6 rounded-b-2xl`}>{matchTypes.map((typeName) => <ClickButton key={typeName} onClick={onStartMatch} className={`${theme.card} text-left rounded-3xl border border-cyan-950/60 p-5 hover:-translate-y-1 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(34,211,238,0.16)]`}><h3 className="font-black text-white">{typeName} <span className="text-zinc-400 text-sm">• 5v5</span></h3><p className="text-zinc-400 text-sm mt-3">{t(language, "premium")}</p></ClickButton>)}</div><CommercialBlocks setPage={setPage} />
+
+        <SiteFooter currentUser={currentUser} setPage={setPage} /></section></main>;
+}
+
+function CommercialBlocks({ setPage }) {
+  const businessCards = [
+    ["Premium-подписка", "Платный подбор, расширенная статистика, приоритетная очередь и профиль PRO."],
+    ["Турниры", "Платные турниры, заявки команд, призовой фонд и страница подтверждения участия."],
+    ["Рекламные места", "Партнёрские баннеры, продвижение клубов, серверов и игровых сервисов."],
+    ["Обращения", "Форма заявки и поддержки сохраняет обращения, а админ меняет их статус."],
+  ];
+
+  const trustItems = ["Понятная цель сайта", "Меню и поиск", "Личный кабинет", "Форма заявки", "Контакты и политика", "Адаптивная версия"];
+
+  return (
+    <section className="mt-6 grid xl:grid-cols-[1.1fr_0.9fr] gap-5">
+      <div className={`${theme.panel} border ${theme.border} rounded-3xl p-6`}>
+        <p className="text-xs uppercase tracking-[0.35em] text-zinc-400 font-black">Commercial goal</p>
+        <h2 className="mt-3 text-3xl font-black">Как сайт зарабатывает</h2>
+        <p className="mt-3 text-zinc-400 max-w-3xl">
+          Dropnetgaming — не просто красивая страница, а коммерческая CS2-платформа. Целевые действия: регистрация, поиск матча, оформление Premium, заявка на турнир и обращение в поддержку.
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          {businessCards.map(([title, text]) => (
+            <div key={title} className="rounded-2xl border border-white/10 bg-black/35 p-4">
+              <b>{title}</b>
+              <p className="text-sm text-zinc-400 mt-2">{text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <ActionButton onClick={() => goTo(setPage, "register")}>Зарегистрироваться</ActionButton>
+          <ActionButton dark onClick={() => goTo(setPage, "feedback")}>Оставить заявку</ActionButton>
+        </div>
+      </div>
+
+      <div className={`${theme.panel} border ${theme.border} rounded-3xl p-6`}>
+        <p className="text-xs uppercase tracking-[0.35em] text-zinc-400 font-black">Trust block</p>
+        <h2 className="mt-3 text-3xl font-black">Блок доверия</h2>
+        <p className="mt-3 text-zinc-400">Добавлены обязательные элементы проекта: коммерческая цель, заявка, контакты, политика, навигация и понятные сценарии.</p>
+        <div className="grid grid-cols-2 gap-3 mt-6">
+          {trustItems.map((item) => (
+            <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.03] p-3 text-sm font-bold">✓ {item}</div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectPage({ setPage }) {
+  const sections = [
+    ["Коммерческая идея", "Игровая платформа для CS2: пользователь регистрируется, ищет матч, прокачивает ELO, оформляет Premium, участвует в турнирах и оставляет заявки."],
+    ["Целевая аудитория", "Игроки CS2, команды, начинающие киберспортсмены, организаторы турниров и рекламодатели игровых сервисов."],
+    ["Информационная архитектура", "Гибридная структура: главная, матчмейкинг, профиль, лидерборд, новости, задания, обращения, админка, контакты и политика."],
+    ["Ключевой сценарий", "Пользователь входит на сайт → регистрируется → нажимает Найти матч → получает результат → видит изменение ELO → возвращается в профиль."],
+    ["План тестирования", "Проверить регистрацию, поиск матча, отправку обращения, добавление новости из админки, адаптивность и понятность навигации."],
+    ["Критерии готовности", "Работают формы, меню, клики, профиль, новости, лидерборд, задания, обращения, админка и адаптивная версия."],
+  ];
+
+  return (
+    <main className="flex-1 overflow-auto bg-transparent text-white p-4 sm:p-6 lg:p-10">
+      <div className="max-w-7xl mx-auto">
+        <section className={`rounded-3xl ${theme.panel} border ${theme.border} p-6 lg:p-8 ${theme.glow}`}>
+          <p className="text-xs uppercase tracking-[0.35em] text-zinc-400 font-black">Design document</p>
+          <h1 className="mt-3 text-4xl lg:text-5xl font-black">О проекте Dropnetgaming</h1>
+          <p className="mt-4 text-zinc-400 max-w-3xl">
+            Этот раздел добавлен для защиты проекта: здесь описаны идея, коммерческая цель, структура сайта, сценарии пользователя и критерии готовности.
+          </p>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <ActionButton onClick={() => goTo(setPage, "register")}>Целевое действие: регистрация</ActionButton>
+            <ActionButton dark onClick={() => goTo(setPage, "feedback")}>Форма заявки</ActionButton>
+          </div>
+        </section>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 mt-6">
+          {sections.map(([title, text]) => (
+            <article key={title} className={`${theme.card} rounded-3xl border border-white/10 p-6`}>
+              <h2 className="text-xl font-black">{title}</h2>
+              <p className="mt-3 text-zinc-400 leading-relaxed">{text}</p>
+            </article>
+          ))}
+        </div>
+
+        <CommercialBlocks setPage={setPage} />
+      </div>
+    </main>
+  );
+}
+
+function ContactsPage({ setPage }) {
+  return (
+    <main className="flex-1 overflow-auto bg-transparent text-white p-4 sm:p-6 lg:p-10">
+      <div className="max-w-4xl mx-auto">
+        <section className={`rounded-3xl ${theme.panel} border ${theme.border} p-6 lg:p-8 ${theme.glow}`}>
+          <Icon name="message" size={48} className="text-white" />
+          <h1 className="mt-4 text-4xl font-black">Контакты</h1>
+          <p className="mt-3 text-zinc-400">Связь с администрацией Dropnetgaming, поддержкой и партнёрским отделом.</p>
+          <div className="grid sm:grid-cols-3 gap-4 mt-6">
+            {["support@dropnetgaming.local", "partners@dropnetgaming.local", "Telegram: @dropnetgaming"].map((item) => (
+              <div key={item} className="rounded-2xl border border-white/10 bg-black/35 p-4 font-bold">{item}</div>
+            ))}
+          </div>
+          <div className="mt-6"><ActionButton onClick={() => goTo(setPage, "feedback")}>Написать обращение</ActionButton></div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+function PrivacyPage() {
+  const items = ["Данные аккаунта используются для входа и профиля.", "Обращения нужны для связи с администрацией.", "Статистика матчей используется для ELO, уровней и лидерборда.", "В демо-версии данные хранятся в браузере через localStorage."];
+  return (
+    <main className="flex-1 overflow-auto bg-transparent text-white p-4 sm:p-6 lg:p-10">
+      <div className="max-w-4xl mx-auto">
+        <section className={`rounded-3xl ${theme.panel} border ${theme.border} p-6 lg:p-8 ${theme.glow}`}>
+          <Icon name="shield" size={48} className="text-white" />
+          <h1 className="mt-4 text-4xl font-black">Политика конфиденциальности</h1>
+          <p className="mt-3 text-zinc-400">Короткое описание обработки данных для учебного проекта.</p>
+          <div className="grid gap-3 mt-6">{items.map((item) => <div key={item} className="rounded-2xl border border-white/10 bg-black/35 p-4">✓ {item}</div>)}</div>
+        </section>
+      </div>
+    </main>
+  );
 }
 
 function NewsPage({ setPage, news, markQuest }) {
@@ -398,7 +535,9 @@ function NewsPage({ setPage, news, markQuest }) {
 }
 
 function SiteFooter({ currentUser, setPage }) {
-  return <footer className="mt-10 border-t border-cyan-500/10 bg-transparent text-white"><div className="grid gap-6 md:grid-cols-3 px-5 lg:px-16 py-8 text-sm"><div><h3 className="font-black mb-3">Dropnetgaming</h3><p className="text-zinc-400 leading-relaxed">Игровая платформа для CS2: матчи, ELO, задания, новости, админка и обратная связь.</p></div><div className="text-center space-y-3"><button type="button" onClick={() => goTo(setPage, "feedback")} className="rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3 font-black hover:bg-white/[0.07]">🌐 Служба поддержки сайта</button><p>Вы зашли под именем <b>{currentUser ? currentUser.nickname || currentUser.username : "Гость"}</b></p><p className="hover:text-cyan-300 cursor-pointer">Автоматический матчмейкинг включён</p><p className="hover:text-cyan-300 cursor-pointer">Ежедневные задания обновляются каждый день</p></div><div className="md:text-right"><h3 className="font-black mb-3">Скачать мобильное приложение</h3><div className="flex flex-col md:items-end gap-3"><button type="button" className="w-44 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2 text-left hover:bg-white/[0.07]"><span className="text-xs">GET IT ON</span><br /><b>Google Play</b></button><button type="button" className="w-44 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2 text-left hover:bg-white/[0.07]"><span className="text-xs">Download on the</span><br /><b>App Store</b></button></div></div></div><div className="relative border-t border-cyan-500/10 bg-transparent py-4 text-center font-semibold">Тема оформления сайта разработана <div className="text-2xl font-black tracking-wide">dropnetgaming</div><button type="button" onClick={() => goTo(setPage, "feedback")} className="absolute right-6 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full border border-white/15 bg-white/[0.04] text-white font-black hover:bg-white/[0.08]">?</button></div></footer>;
+  return <footer className="mt-10 border-t border-cyan-500/10 bg-transparent text-white"><div className="grid gap-6 md:grid-cols-3 px-5 lg:px-16 py-8 text-sm"><div><h3 className="font-black mb-3">Dropnetgaming</h3><p className="text-zinc-400 leading-relaxed">Игровая платформа для CS2: матчи, ELO, задания, новости, админка и обратная связь.</p></div><div className="text-center space-y-3"><button type="button" onClick={() => goTo(setPage, "feedback")} className="rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3 font-black hover:bg-white/[0.07]">🌐 Служба поддержки сайта</button><p>Вы зашли под именем <b>{currentUser ? currentUser.nickname || currentUser.username : "Гость"}</b></p><button type="button" onClick={() => goTo(setPage, "project")} className="block mx-auto hover:text-white cursor-pointer">О проекте и монетизации</button>
+          <button type="button" onClick={() => goTo(setPage, "contacts")} className="block mx-auto hover:text-white cursor-pointer">Контакты</button>
+          <button type="button" onClick={() => goTo(setPage, "privacy")} className="block mx-auto hover:text-white cursor-pointer">Политика конфиденциальности</button></div><div className="md:text-right"><h3 className="font-black mb-3">Скачать мобильное приложение</h3><div className="flex flex-col md:items-end gap-3"><button type="button" className="w-44 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2 text-left hover:bg-white/[0.07]"><span className="text-xs">GET IT ON</span><br /><b>Google Play</b></button><button type="button" className="w-44 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2 text-left hover:bg-white/[0.07]"><span className="text-xs">Download on the</span><br /><b>App Store</b></button></div></div></div><div className="relative border-t border-cyan-500/10 bg-transparent py-4 text-center font-semibold">Тема оформления сайта разработана <div className="text-2xl font-black tracking-wide">dropnetgaming</div><button type="button" onClick={() => goTo(setPage, "feedback")} className="absolute right-6 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full border border-white/15 bg-white/[0.04] text-white font-black hover:bg-white/[0.08]">?</button></div></footer>;
 }
 
 function FeedbackPage({ currentUser, tickets, setTickets, markQuest }) {
@@ -582,6 +721,9 @@ export default function DropnetgamingApp() {
   const CurrentPage = useMemo(() => {
     if (page === "matchmaking") return () => <Matchmaking setPage={setPage} language={language} currentUser={currentUser} onStartMatch={startMatchSearch} quests={quests} matches={matches} />;
     if (page === "news") return () => <NewsPage setPage={setPage} news={news} markQuest={markQuest} />;
+    if (page === "project") return () => <ProjectPage setPage={setPage} />;
+    if (page === "contacts") return () => <ContactsPage setPage={setPage} />;
+    if (page === "privacy") return () => <PrivacyPage />;
     if (page === "feedback") return () => <FeedbackPage currentUser={currentUser} tickets={tickets} setTickets={setTickets} markQuest={markQuest} />;
     if (page === "profile") return () => <ProfilePage setPage={setPage} language={language} currentUser={currentUser} matches={matches} tickets={tickets} />;
     if (page === "settings") return () => <SettingsPage language={language} setLanguage={setLanguage} />;
