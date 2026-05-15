@@ -122,7 +122,7 @@ const theme = {
   card: "bg-zinc-950/70 backdrop-blur-2xl",
   border: "border-white/15",
   glow: "shadow-[0_0_48px_rgba(255,255,255,0.10)]",
-  button: "bg-gradient-to-r from-zinc-200 via-white to-zinc-500 hover:from-white hover:via-zinc-200 hover:to-slate-400",
+  button: "bg-gradient-to-r from-zinc-950 via-zinc-800 to-zinc-700 hover:from-black hover:via-zinc-700 hover:to-zinc-600",
 };
 
 const routeIcons = {
@@ -292,7 +292,7 @@ function DropnetgamingLogo({ compact = false }) {
         <img
           src={logoSrc}
           alt="DNG logo"
-          className="h-12 w-12 rounded-2xl object-cover border border-cyan-300/40 shadow-[0_0_24px_rgba(34,211,238,0.34)] bg-black"
+          className="h-12 w-12 rounded-2xl object-cover border border-white/10 shadow-[0_0_18px_rgba(255,255,255,0.12)] bg-black"
         />
         <div className="leading-none">
           <div className="text-white font-black text-2xl tracking-tight">DNG</div>
@@ -303,7 +303,7 @@ function DropnetgamingLogo({ compact = false }) {
   }
 
   return (
-    <div className="relative w-full max-w-[190px] rounded-[28px] overflow-hidden bg-black border border-cyan-400/25 shadow-[0_0_34px_rgba(34,211,238,0.28)]">
+    <div className="relative w-full max-w-[190px] rounded-[28px] overflow-hidden bg-black border border-white/10 shadow-[0_0_22px_rgba(255,255,255,0.10)]">
       <img src={logoSrc} alt="DNG logo" className="block w-full h-auto object-cover" />
     </div>
   );
@@ -318,7 +318,7 @@ function ClickButton({ children, onClick, className = "", title }) {
 }
 
 function ActionButton({ children, onClick, dark = false }) {
-  const cls = dark ? "bg-white/5 hover:bg-white/10 border-white/10 hover:border-cyan-300/50 text-white" : `${theme.button} border-cyan-300/40 text-white shadow-[0_0_28px_rgba(34,211,238,0.28)] hover:shadow-[0_0_40px_rgba(34,211,238,0.42)]`;
+  const cls = dark ? "bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/30 text-white" : `${theme.button} border-white/20 text-white shadow-[0_0_26px_rgba(255,255,255,0.10)] hover:shadow-[0_0_34px_rgba(255,255,255,0.16)]`;
   return <ClickButton onClick={onClick} className={`${cls} px-5 py-3 rounded-2xl font-black border backdrop-blur-md tracking-wide`}><span className="relative z-10">{children}</span></ClickButton>;
 }
 
