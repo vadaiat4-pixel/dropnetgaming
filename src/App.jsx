@@ -284,7 +284,7 @@ function IconBox({ name, active = false }) {
 }
 
 function DropnetgamingLogo({ compact = false }) {
-  const logoSrc = "/logo-dng-final.png";
+  const logoSrc = `${import.meta.env.BASE_URL}logo-dng-final.png`;
 
   if (compact) {
     return (
