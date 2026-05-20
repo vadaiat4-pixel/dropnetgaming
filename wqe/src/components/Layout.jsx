@@ -1,83 +1,289 @@
-import Icon from './Icon.jsx';
-import Logo from './Logo.jsx';
-import { navigation } from '../data/seed.js';
-import { navigate } from '../utils/router.js';
+import React from "react";
+import Icon from "./Icon.jsx";
+import Logo from "./Logo.jsx";
+import { navigate } from "../utils/router.js";
 
-const topLinks = ['matchmaking', 'play', 'match-room', 'tournaments', 'premium', 'teams', 'leaderboard', 'news', 'faq'];
+const topNav = [
+  {
+    to: "matchmaking",
+    label: "Матчмейкинг",
+    icon: "home",
+  },
+  {
+    to: "play",
+    label: "Играть",
+    icon: "play",
+  },
+  {
+    to: "match-room",
+    label: "Комната матча",
+    icon: "swords",
+  },
+  {
+    to: "tournaments",
+    label: "Турниры",
+    icon: "trophy",
+  },
+  {
+    to: "premium",
+    label: "Premium",
+    icon: "crown",
+  },
+  {
+    to: "teams",
+    label: "Команды",
+    icon: "users",
+  },
+  {
+    to: "leaderboard",
+    label: "Лидерборд",
+    icon: "chart",
+  },
+  {
+    to: "news",
+    label: "Новости",
+    icon: "news",
+  },
+  {
+    to: "faq",
+    label: "FAQ",
+    icon: "message",
+  },
+];
 
-function NavLink({ item, active }) {
+const mainNav = [
+  {
+    to: "search",
+    label: "Поиск",
+    icon: "search",
+  },
+  {
+    to: "friends",
+    label: "Party Finder",
+    icon: "users",
+  },
+  {
+    to: "play",
+    label: "Играть",
+    icon: "play",
+  },
+  {
+    to: "match-room",
+    label: "Комната матча",
+    icon: "swords",
+  },
+  {
+    to: "premium",
+    label: "Premium",
+    icon: "crown",
+  },
+  {
+    to: "teams",
+    label: "Команды",
+    icon: "users",
+  },
+  {
+    to: "leaderboard",
+    label: "Лидерборд",
+    icon: "chart",
+  },
+  {
+    to: "news",
+    label: "Новости",
+    icon: "news",
+  },
+  {
+    to: "quests",
+    label: "Задания",
+    icon: "missions",
+  },
+  {
+    to: "feedback",
+    label: "Обратная связь",
+    icon: "message",
+  },
+];
+
+const commerceNav = [
+  {
+    to: "tournaments",
+    label: "Турниры",
+    icon: "trophy",
+  },
+  {
+    to: "inventory",
+    label: "SKINBRO | CS2",
+    icon: "inventory",
+  },
+  {
+    to: "rules",
+    label: "Правила",
+    icon: "shield",
+  },
+  {
+    to: "contacts",
+    label: "Контакты",
+    icon: "message",
+  },
+  {
+    to: "privacy",
+    label: "Политика",
+    icon: "shield",
+  },
+];
+
+function NavButton({ item, active }) {
   return (
-    <a className={`nav-link ${active ? 'active' : ''}`} href={`#/${item.path}`}>
-      <Icon name={item.icon} />
+    <button
+      type="button"
+      onClick={() => navigate(item.to)}
+      className={active ? "nav-item active" : "nav-item"}
+      title={item.label}
+    >
+      <span className="nav-icon">
+        <Icon name={item.icon} />
+      </span>
+
       <span>{item.label}</span>
-    </a>
+    </button>
   );
 }
 
-export default function Layout({ children, route, currentUser, onLogout, notifications }) {
-  const mainItems = navigation.filter((item) => ['main', 'commerce', 'content'].includes(item.group));
-  const projectItems = navigation.filter((item) => ['project', 'support'].includes(item.group));
+function TopButton({ item, active }) {
+  return (
+    <button
+      type="button"
+      onClick={() => navigate(item.to)}
+      className={active ? "top-link active" : "top-link"}
+    >
+      {item.label}
+    </button>
+  );
+}
 
+export default function Layout({
+  route,
+  currentUser,
+  onLogout,
+  notifications = [],
+  children,
+}) {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <button className="logo-button" type="button" onClick={() => navigate('matchmaking')}>
+        <button
+          type="button"
+          className="brand-button"
+          onClick={() => navigate("matchmaking")}
+        >
           <Logo compact />
         </button>
 
-        <nav className="top-nav" aria-label="Главное меню">
-          {navigation
-            .filter((item) => topLinks.includes(item.path))
-            .map((item) => (
-              <a key={item.path} className={route === item.path ? 'top-link active' : 'top-link'} href={`#/${item.path}`}>
-                {item.label}
-              </a>
-            ))}
+        <nav className="topnav">
+          {topNav.map((item) => (
+            <TopButton
+              key={item.to}
+              item={item}
+              active={route === item.to}
+            />
+          ))}
         </nav>
 
         <div className="top-actions">
-          <div className="notif">🔔 {notifications.length}</div>
+          <button
+            type="button"
+            className="notify-button"
+            title="Уведомления"
+          >
+            🔔 {notifications.length}
+          </button>
+
           {currentUser ? (
             <>
-              <a className="small-action" href="#/profile">{currentUser.nickname || currentUser.username}</a>
-              {currentUser.role === 'admin' && <a className="small-action admin" href="#/admin">Админ-панель</a>}
-              <button className="small-action" type="button" onClick={onLogout}>Выйти</button>
+              {currentUser.role === "admin" && (
+                <button
+                  type="button"
+                  className="small-button admin-button"
+                  onClick={() => navigate("admin")}
+                >
+                  Админ
+                </button>
+              )}
+
+              <button
+                type="button"
+                className="small-button"
+                onClick={() => navigate("profile")}
+              >
+                {currentUser.nickname || currentUser.username}
+              </button>
+
+              <button
+                type="button"
+                className="small-button danger"
+                onClick={onLogout}
+              >
+                Выйти
+              </button>
             </>
           ) : (
             <>
-              <a className="small-action" href="#/login">Войти</a>
-              <a className="small-action admin" href="#/register">Регистрация</a>
+              <button
+                type="button"
+                className="small-button"
+                onClick={() => navigate("login")}
+              >
+                Войти
+              </button>
+
+              <button
+                type="button"
+                className="small-button primary"
+                onClick={() => navigate("register")}
+              >
+                Регистрация
+              </button>
             </>
           )}
         </div>
       </header>
 
-      <div className="body-grid">
+      <div className="layout-body">
         <aside className="sidebar">
-          <button className="logo-large-button" type="button" onClick={() => navigate('matchmaking')}>
+          <button
+            type="button"
+            className="sidebar-logo-button"
+            onClick={() => navigate("matchmaking")}
+          >
             <Logo />
           </button>
 
-          <nav className="side-list" aria-label="Разделы сайта">
-            {mainItems.map((item) => <NavLink key={item.path} item={item} active={route === item.path} />)}
-            <div className="side-divider" />
-            {projectItems.map((item) => <NavLink key={item.path} item={item} active={route === item.path} />)}
+          <nav className="side-nav">
+            {mainNav.map((item) => (
+              <NavButton
+                key={item.to}
+                item={item}
+                active={route === item.to}
+              />
+            ))}
+          </nav>
+
+          <div className="side-separator" />
+
+          <nav className="side-nav">
+            {commerceNav.map((item) => (
+              <NavButton
+                key={item.to}
+                item={item}
+                active={route === item.to}
+              />
+            ))}
           </nav>
         </aside>
 
-        <main className="page-content">{children}</main>
-
-        <aside className="rightbar" aria-label="Быстрые ссылки">
-          {['profile', 'feedback', 'quests', 'settings', 'admin'].map((key) => {
-            const item = navigation.find((nav) => nav.path === key) || { path: key, icon: key === 'admin' ? 'admin' : 'settings', label: key };
-            if (key === 'admin' && currentUser?.role !== 'admin') return null;
-            return (
-              <a key={key} href={`#/${item.path}`} title={item.label}>
-                <Icon name={item.icon} />
-              </a>
-            );
-          })}
-        </aside>
+        <main className="page-area">
+          {children}
+        </main>
       </div>
     </div>
   );
