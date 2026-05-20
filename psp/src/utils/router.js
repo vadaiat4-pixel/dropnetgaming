@@ -1,25 +1,18 @@
 export const routes = [
   "matchmaking",
   "play",
-  "matchRoom",
+  "match-room",
   "tournaments",
   "premium",
-  "pricing",
   "teams",
   "leaderboard",
   "news",
-  "missions",
+  "quests",
   "feedback",
   "profile",
   "login",
   "register",
   "admin",
-  "project",
-  "designDoc",
-  "prototype",
-  "testing",
-  "roadmap",
-  "partners",
   "rules",
   "faq",
   "contacts",
@@ -35,7 +28,7 @@ export const routes = [
   "league",
 ];
 
-export function getRouteFromHash() {
+export function getHashRoute() {
   const cleanHash = window.location.hash
     .replace("#/", "")
     .replace("#", "")
@@ -46,14 +39,14 @@ export function getRouteFromHash() {
     return "matchmaking";
   }
 
-  return routes.includes(cleanHash) ? cleanHash : "notFound";
+  return routes.includes(cleanHash) ? cleanHash : "not-found";
 }
 
-export function goTo(setPage, page, message) {
-  const targetPage = routes.includes(page) ? page : "notFound";
+export function navigate(page, message) {
+  const targetPage = routes.includes(page) ? page : "not-found";
 
   window.history.pushState(null, "", `#/${targetPage}`);
-  setPage(targetPage);
+  window.dispatchEvent(new HashChangeEvent("hashchange"));
 
   if (message) {
     window.setTimeout(() => alert(message), 40);
