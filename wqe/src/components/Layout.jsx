@@ -4,132 +4,36 @@ import Logo from "./Logo.jsx";
 import { navigate } from "../utils/router.js";
 
 const topNav = [
-  {
-    to: "matchmaking",
-    label: "Матчмейкинг",
-    icon: "home",
-  },
-  {
-    to: "play",
-    label: "Играть",
-    icon: "play",
-  },
-  {
-    to: "match-room",
-    label: "Комната матча",
-    icon: "swords",
-  },
-  {
-    to: "tournaments",
-    label: "Турниры",
-    icon: "trophy",
-  },
-  {
-    to: "premium",
-    label: "Premium",
-    icon: "crown",
-  },
-  {
-    to: "teams",
-    label: "Команды",
-    icon: "users",
-  },
-  {
-    to: "leaderboard",
-    label: "Лидерборд",
-    icon: "chart",
-  },
-  {
-    to: "news",
-    label: "Новости",
-    icon: "news",
-  },
-  {
-    to: "faq",
-    label: "FAQ",
-    icon: "message",
-  },
+  { to: "matchmaking", label: "Матчмейкинг", icon: "home" },
+  { to: "play", label: "Играть", icon: "play" },
+  { to: "match-room", label: "Комната матча", icon: "swords" },
+  { to: "tournaments", label: "Турниры", icon: "trophy" },
+  { to: "premium", label: "Premium", icon: "crown" },
+  { to: "teams", label: "Команды", icon: "users" },
+  { to: "leaderboard", label: "Лидерборд", icon: "chart" },
+  { to: "news", label: "Новости", icon: "news" },
+  { to: "faq", label: "FAQ", icon: "message" },
 ];
 
 const mainNav = [
-  {
-    to: "search",
-    label: "Поиск",
-    icon: "search",
-  },
-  {
-    to: "friends",
-    label: "Party Finder",
-    icon: "users",
-  },
-  {
-    to: "play",
-    label: "Играть",
-    icon: "play",
-  },
-  {
-    to: "match-room",
-    label: "Комната матча",
-    icon: "swords",
-  },
-  {
-    to: "premium",
-    label: "Premium",
-    icon: "crown",
-  },
-  {
-    to: "teams",
-    label: "Команды",
-    icon: "users",
-  },
-  {
-    to: "leaderboard",
-    label: "Лидерборд",
-    icon: "chart",
-  },
-  {
-    to: "news",
-    label: "Новости",
-    icon: "news",
-  },
-  {
-    to: "quests",
-    label: "Задания",
-    icon: "missions",
-  },
-  {
-    to: "feedback",
-    label: "Обратная связь",
-    icon: "message",
-  },
+  { to: "search", label: "Поиск", icon: "search" },
+  { to: "friends", label: "Party Finder", icon: "users" },
+  { to: "play", label: "Играть", icon: "play" },
+  { to: "match-room", label: "Комната матча", icon: "swords" },
+  { to: "premium", label: "Premium", icon: "crown" },
+  { to: "teams", label: "Команды", icon: "users" },
+  { to: "leaderboard", label: "Лидерборд", icon: "chart" },
+  { to: "news", label: "Новости", icon: "news" },
+  { to: "quests", label: "Задания", icon: "missions" },
+  { to: "feedback", label: "Обратная связь", icon: "message" },
 ];
 
-const commerceNav = [
-  {
-    to: "tournaments",
-    label: "Турниры",
-    icon: "trophy",
-  },
-  {
-    to: "inventory",
-    label: "SKINBRO | CS2",
-    icon: "inventory",
-  },
-  {
-    to: "rules",
-    label: "Правила",
-    icon: "shield",
-  },
-  {
-    to: "contacts",
-    label: "Контакты",
-    icon: "message",
-  },
-  {
-    to: "privacy",
-    label: "Политика",
-    icon: "shield",
-  },
+const serviceNav = [
+  { to: "tournaments", label: "Турниры", icon: "trophy" },
+  { to: "inventory", label: "SKINBRO | CS2", icon: "inventory" },
+  { to: "rules", label: "Правила", icon: "shield" },
+  { to: "contacts", label: "Контакты", icon: "message" },
+  { to: "privacy", label: "Политика", icon: "shield" },
 ];
 
 function NavButton({ item, active }) {
@@ -143,7 +47,6 @@ function NavButton({ item, active }) {
       <span className="nav-icon">
         <Icon name={item.icon} />
       </span>
-
       <span>{item.label}</span>
     </button>
   );
@@ -190,11 +93,7 @@ export default function Layout({
         </nav>
 
         <div className="top-actions">
-          <button
-            type="button"
-            className="notify-button"
-            title="Уведомления"
-          >
+          <button type="button" className="notify-button">
             🔔 {notifications.length}
           </button>
 
@@ -271,7 +170,7 @@ export default function Layout({
           <div className="side-separator" />
 
           <nav className="side-nav">
-            {commerceNav.map((item) => (
+            {serviceNav.map((item) => (
               <NavButton
                 key={item.to}
                 item={item}
@@ -281,9 +180,7 @@ export default function Layout({
           </nav>
         </aside>
 
-        <main className="page-area">
-          {children}
-        </main>
+        <main className="page-area">{children}</main>
       </div>
     </div>
   );
