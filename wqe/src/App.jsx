@@ -50,7 +50,7 @@ function loadUsers() {
   const saved = readJson(storageKeys.users, []);
 
   const cleaned = saved
-    .filter((user) => user.username !== "admin" && user.username !== adminUser.username)
+    .filter((user) => user.username !== "admsn" && user.username !== adminUser.username)
     .map(normalizeUser);
 
   return [normalizeUser(adminUser), ...cleaned];
