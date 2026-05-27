@@ -1,42 +1,55 @@
-export const validRoutes = [
-  'matchmaking',
-  'play',
-  'match-room',
-  'tournaments',
-  'premium',
-  'teams',
-  'leaderboard',
-  'quests',
-  'news',
-  'feedback',
-  'contacts',
-  'privacy',
-  'rules',
-  'faq',
-  'testing',
-  'profile',
-  'login',
-  'register',
-  'admin',
-  'servers',
-  'settings',
-  'friends',
-  'inventory',
-  'search',
-  'stats',
-  'league',
-  'maps',
-  'anticheat',
-  'not-found',
+export const routes = [
+  "matchmaking",
+  "play",
+  "match-room",
+  "tournaments",
+  "premium",
+  "teams",
+  "leaderboard",
+  "news",
+  "quests",
+  "feedback",
+  "profile",
+  "login",
+  "register",
+  "admin",
+  "rules",
+  "faq",
+  "contacts",
+  "privacy",
+  "testing",
+  "search",
+  "friends",
+  "inventory",
+  "maps",
+  "servers",
+  "anticheat",
+  "settings",
+  "stats",
+  "league",
 ];
 
 export function getHashRoute() {
-  const value = window.location.hash.replace('#/', '').replace('#', '').split('?')[0].trim();
-  if (!value) return 'matchmaking';
-  return validRoutes.includes(value) ? value : 'not-found';
+  const cleanHash = window.location.hash
+    .replace("#/", "")
+    .replace("#", "")
+    .split("?")[0]
+    .trim();
+
+  if (!cleanHash) {
+    return "matchmaking";
+  }
+
+  return routes.includes(cleanHash) ? cleanHash : "not-found";
 }
 
-export function navigate(path) {
-  const target = validRoutes.includes(path) ? path : 'not-found';
-  window.location.hash = `#/${target}`;
+export function navigate(page, message) {
+  const targetPage = routes.includes(page) ? page : "not-found";
+
+  window.history.pushState(null, "", `#/${targetPage}`);
+  window.dispatchEvent(new HashChangeEvent("hashchange"));
+
+  if (message) {
+    window.setTimeout(() => alert(message), 40);
+  }
 }
